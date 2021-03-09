@@ -11,7 +11,7 @@
 
     <!--未登录-->
     <div sec:authorize="!isAuthenticated()">
-        <a th:href="@{/toLogin}">登录nimabi</a>
+        <a th:href="@{/toLogin}">登录</a>
     </div>
 
 
@@ -19,8 +19,11 @@
     <div sec:authorize="isAuthenticated()">
         用户名:<span sec:authentication="name"></span>
 <!--        角色:<span sec:authentication="principal.getAuthorities()"></span>-->
+        角色:<span sec:authentication="principal.authorities"></span>
         <a th:href="@{/logout}">注销</a>
+        <a th:href="@{/getInfo}">获取用户信息</a>
     </div>
+
 
 </div>
 

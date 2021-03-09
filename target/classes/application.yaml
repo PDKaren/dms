@@ -1,6 +1,12 @@
 server:
   port: 8080
 spring:
+#  mvc:   #静态文件   -- 可以不用配 引入了依赖 spring-boot-starter-thymeleaf
+#    static-path-pattern: /static/**
+  thymeleaf:
+    model: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/tang?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
