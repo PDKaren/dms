@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>登录</title>
+<title>Login</title>
 <link type="text/css" rel="stylesheet" href="css/login.css" />
 <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
@@ -30,12 +30,16 @@ $(document).ready(function () {
         <div class="main_r_up">
             <img src="imgs/login/user.png" />
             <div class="pp">登录</div>
+            <div class="pp" style="float: right"><a href="/">返回首页</a></div>
         </div>
          <div class="sub"><p>还没有账号？<a href="zhuce.html"><span class="blue">立即注册</span></a></p></div>
          <form th:action="@{/login}" method="post">
             <div class="txt">
                 <span style="letter-spacing:8px;">用户名:</span>
                 <input name="username" type="text" class="txtphone" placeholder="请输入注册手机号或用户名"/>
+                <div style="text-align: center;color: red;" th:if="${param.error}">
+                    <p th:text="账号或密码错误"></p>
+                </div>
             </div>
             <div class="txt">
                 <span style="letter-spacing:4px;">登录密码:</span>
@@ -46,9 +50,19 @@ $(document).ready(function () {
                 <input name="code" type="text" class="txtyzm" placeholder="请输入页面验证码"/>
                 <img class="yzmimg" style="height:28px;" id="codeImg" alt="点击更换" title="点击更换" src="/images/imagecode"
                      onclick="Code()"/>
+                <div style="text-align: center;color: red;" th:if="${param.err} ne null">
+                    <p th:if="${param.err[0] == '400'}" th:text="验证码错误"></p>
+                    <p th:if="${param.err[0] == '401'}" th:text="验证码过期  请从新获取"></p>
+                </div>
             </div>
+             <div class="txt">
+                 <span style="letter-spacing:4px;">用户类型:</span>
+                     <input type="radio" name="role" value="1" style="vertical-align:middle;">学生
+                     <input type="radio" name="role" value="2" style="vertical-align:middle;">教师
+                     <input type="radio" name="role" value="3" style="vertical-align:middle;">管理员
+             </div>
             <div class="xieyi">
-                <input name="" type="checkbox" value="" checked="checked"/>
+                <input name="remember" type="checkbox" value="" checked="checked"/>
                 记住我 <a href="password.html"><span class="blue" style=" padding-left:130px; cursor:pointer">忘记密码?</span></a>
             </div>
             <input class="xiayibu" type="submit" value="登录">
@@ -56,6 +70,10 @@ $(document).ready(function () {
      </div>
   </div>
 </div>
+<!--<span th:each="cookie :${#httpServletRequest.getCookies()}"
+      th:if="${cookie.getName().equals('coo')}"
+      th:text="${cookie.getValue()}">
+</span>-->
 
 <div class="footer">
   <div class="footer0">

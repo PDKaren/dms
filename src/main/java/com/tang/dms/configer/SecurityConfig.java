@@ -49,28 +49,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/level2/**").hasRole("vip2")
                 .antMatchers("/level3/**").hasRole("vip3");
 
-
 //        没有权限默认会跳到登录页面,需要开启到登录页面
-        http.formLogin().loginPage("/toLogin").loginProcessingUrl("/login");
-        //注销 注销后跳到首页
-        //防止网站攻击: get,post
-        http.csrf().disable();//关闭csrf功能，登出失败的可能的原因
-        http.logout().logoutSuccessUrl("/");
+        http
+            .formLogin()
+            .loginPage("/toLogin")
+            .loginProcessingUrl("/login")
+            .successForwardUrl("/")
+            .failureUrl("/toLogin?error=true")
+            .permitAll();// 异常处理
 
-        //记住我的功能开启 coolie,默认保存两周 自定义接受前端参数
+        http.csrf().disable();//关闭csrf功能，登出失败的可能的原因
+        http.logout().logoutSuccessUrl("/");//注销 注销后跳到首页
+
+        //记住我的功能开启 cookie,默认保存两周 自定义接受前端参数
         http.rememberMe().rememberMeParameter("remember");
+
+//        http.addFilterAt(adminAuthenticationProcessingFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    //认证
-    //springboot 2.1.x 之前可直接使用 后面的会
-    //java.lang.IllegalArgumentException: There is no PasswordEncoder mapped for the id "null"
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //这些数据正常应该从数据库读
-//        auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-//                .withUser("pd").password(new BCryptPasswordEncoder().encode("123456")).roles("vip2","vip3")
-//                .and()
-//                .withUser("root").password(new BCryptPasswordEncoder().encode("123456")).roles("vip1","vip2","vip3");
         auth.userDetailsService(userDetailsService);//.passwordEncoder(new BCryptPasswordEncoder())
     }
 

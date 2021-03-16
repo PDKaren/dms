@@ -40,7 +40,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             System.out.println("管理员信息："+user.getUsername()+"   "+passwordEncoder.encode(studentUser.getPassword())+"  "+user.getAuthorities());
             return user;*/
            UserDetails userDetails = User.withUsername(studentUser.getName()).password(studentUser.getPassword()).authorities("t1 ").roles("vip1").build();
-
+            if (userDetails==null){
+                throw new UsernameNotFoundException("用户不存在！");
+            }
             System.out.println("管理员信息："+userDetails.getUsername()+"   "+passwordEncoder.encode(studentUser.getPassword())+"  "+userDetails.getAuthorities());
            return userDetails;
         }

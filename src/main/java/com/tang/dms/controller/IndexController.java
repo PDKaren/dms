@@ -1,13 +1,18 @@
 package com.tang.dms.controller;
 
+import com.tang.dms.entity.Notice;
+import com.tang.dms.entity.bo.NoticeBO;
+import com.tang.dms.service.NoticeService;
 import com.tang.dms.util.ImageCode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.util.StringUtils;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,7 +32,7 @@ import java.util.Map;
 @Controller
 public class IndexController {
 
-    @PostMapping("/user/login")
+/*    @PostMapping("/user/login")
     public String login(
             @RequestParam("username") String username,
             @RequestParam("password") String password,
@@ -43,29 +49,33 @@ public class IndexController {
     public String logout(HttpSession session){
         session.invalidate();
         return "redirect:/main.html";
+    }*/
+
+    @Resource
+    private NoticeService noticeService;
+
+    @RequestMapping("/toError")
+    public String error(){
+        return "view/error";
     }
 
-
-
     @RequestMapping({"/","/index"})
-    public String index(){
+    public String index(Model model){
+        List<NoticeBO> list = noticeService.getNoticeList();
+        System.out.println(list);
+        model.addAttribute("noticeList",list);
         return "view/index/index";
     }
     @RequestMapping("/toLogin")
     public String toLogin(){
         return "view/login";
     }
-    @RequestMapping("/level1/{id}")
-    public String level1(@PathVariable("id")int id){
-        return "views/level1/"+id;
-    }
-    @RequestMapping("/level2/{id}")
-    public String level2(@PathVariable("id")int id){
-        return "views/level2/"+id;
-    }
-    @RequestMapping("/level3/{id}")
-    public String level3(@PathVariable("id")int id){
-        return "views/level3/"+id;
+
+    @GetMapping("/getNoticeById")
+    public Map<String,Object> getNotices(){
+
+
+        return null;
     }
 
     @RequestMapping("/getInfo")

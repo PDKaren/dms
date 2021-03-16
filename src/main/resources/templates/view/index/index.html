@@ -10,7 +10,9 @@
 <link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>-->
 <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />-->
   <script type="text/javascript" language="javascript">
     //加入收藏
     function AddFavorite(sURL, sTitle) {
@@ -35,6 +37,25 @@
       }
     }
   </script>
+    <style>
+        /* 隐藏滚动条 */
+        #listView::-webkit-scrollbar {
+            display: none;
+        }
+        #listView {
+            height: 550px;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function(e) {
+            $(".menu_center a").click(function(){
+                $(this).parent(".menu_center").children("a").eq($(this).index()).addClass("active").siblings().removeClass("active");
+                // $(this).parent(".menu_center").next(".tabCon").children("div").hide().eq($(this).index()).show();
+            })
+        });
+    </script>
 </head>
 
 <body>
@@ -54,8 +75,8 @@
 </div>
 <div class="header">
   <div class="header_center">
-    <h1> <a href=""> <img src="imgs/logo.png"/> </a> </h1>
-    <strong> 客服电话：020-123456789 </strong>
+    <h1> <a href=""> <img src="imgs/logo.jpg"/> </a> </h1>
+    <strong> 宿舍管理员电话：020-123456789 </strong>
     <form method="post" onclick="return false">
       <input type="text" name="" id="" value="" placeholder="请输入关键词" />
       <button><i class="fa fa-fw fa-search"></i> 搜索</button>
@@ -63,22 +84,112 @@
 </div>
 </div>
 <div class="menu">
-  <div class="menu_center"> <a href="index.html" class="active">网站主页</a> <a href="page.html">企业简介</a> <a href="list_pro.html">产品展示</a> <a href="page.html">人力资源</a> <a href="list_arc.html">新闻中心</a> <a href="page.html">营销网络</a> <a href="page.html">企业文化</a> <a href="page.html">联系我们</a> </div>
+  <div class="menu_center">
+      <a href="#" class="active">首页</a>
+      <a href="#">水电查询</a>
+      <a href="#">宿舍保修</a>
+      <a href="#">人力资源</a>
+      <a href="#">调宿申请</a>
+      <a href="#">产品信息</a>
+      <a href="#">联系我们</a>
+  </div>
 </div>
 <div class="banner">
   <div class="swiper-container swiper-container-banner">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" style="background-image: url(imgs/banner1.jpg);"></div>
-      <div class="swiper-slide" style="background-image: url(imgs/banner1.jpg);"></div>
-      <div class="swiper-slide" style="background-image: url(imgs/banner1.jpg);"></div>
+      <div class="swiper-slide" style="background-image: url(imgs/banner2.jpg);"></div>
+      <div class="swiper-slide" style="background-image: url(imgs/banner2.jpg);"></div>
+      <div class="swiper-slide" style="background-image: url(imgs/banner2.jpg);"></div>
     </div>
     <!-- Add Pagination -->
     <div class="swiper-pagination"></div>
   </div>
 </div>
 <div class="title_prohot">
-  <h3>公司产品</h3>
-  <p>—— 产品众多，满足您的各种需求 ——</p>
+    <h3>公告</h3>
+    <p>—— 宿舍管理系统公告栏 ——</p>
+</div>
+<div class="prolist">
+    <div class="left_nav" style="position: relative;">
+        <dl class="dlx1">
+            <dt>公司产品</dt>
+            <dd>OUR PRODUCTS</dd>
+        </dl>
+        <ul id="listView" style="overflow:overlay;">
+            <div th:each="notice, noticeStat : ${noticeList}">
+            <li style="margin-bottom: 15px;"> <a href="#"><i class="fa fa-fw fa-chevron-circle-right"></i>[[${notice.title}]]</a></li>
+            </div>
+        </ul>
+        <dl class="dlx2" style="position:absolute;bottom:0;padding: 15px 0;padding-left: 20px;width:100%;">
+            <dt>客服电话</dt>
+            <dd>021-123456</dd>
+        </dl>
+    </div>
+    <div class="right_box">
+        <style type="text/css">
+            #notice { width: 700px; margin: 40px auto; border: 1px solid #999; padding: 0 20px;  border-radius:10px;}
+            #notice li{list-style: none;}
+        </style>
+        <div style="text-align: center" id="notice">
+
+            <h1>重要通知（HTML5+CSS3，IE悲剧）</h1>
+            <p>根据《中华人民共和国宪法》和相关法律法规规定，在保护公民合法言论自由的同时，禁止利用互联网、通讯工具、媒体以及其他方式从事以下行为：</p>
+            <ul>
+                <li>一、组织、煽动抗拒、破坏宪法和法律、法规实施的。</li>
+                <li>二、捏造或者歪曲事实，散布谣言，妨害社会管理秩序的。</li>
+                <li>三、组织、煽动非法集会、游行、示威、扰乱公共场所秩序的。</li>
+                <li>四、从事其他侵犯国家、社会、集体利益和公民合法权益的。</li>
+            </ul>
+            <p>管理部门将依法严加监管上述行为并予以处理；对构成犯罪的，司法机关将追究刑事责任。</p>
+
+            <p>发布者：</p>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url:"./json/tab_General.json",  //tab数据存储在json中
+                    type:"get",
+                    dataType:'json',
+                    success: function(data){
+
+                        var dataList=data.data[0].subset;
+                        var ifrId =  document.getElementById("ifrContentId");
+
+                        for (let value of dataList) {
+
+                            var tabName=value.name;
+                            //循环获取tab名称显示在页面上
+                            var title="<div class='subtab"+" "+ tabName +" "+value.selected+"' name='"+value.name+"'><a href='#'>"+value.text+"</a></div>";
+                            $("#tab_Gnenral").append(title);
+                            //默认显示第一个tab也内容
+                            if(value.text=="tab1") {
+                                var content="<div class='iframe-container"+" "+value.name+ "-iframe" +" "+value.done+"'><iframe src='"+value.href+"' height='2200'  width='800'></iframe></div>";
+                                $("#ifrContentId").empty().append(content);
+                            }
+
+                            //获取所有tab名称
+                            var res = document.getElementsByClassName('subtab');
+                            for(var i=0;i<res.length;i++){
+                                //给每个tab添加click事件，点击每个tab选项卡显示该选项卡的页面内容
+                                res[i].addEventListener('click',function(e){
+                                    if($(this)[0].innerText==value.text) {
+                                        var content = "<div class='iframe-container" + " " + value.name + "-iframe" + " " + value.done + "'><iframe height='2200'  width='800' src='" + value.href + "' ></iframe></div>";
+                                        $("#ifrContentId").empty().append(content);  //empty()方法删除匹配元素的所有子节点，解决页面切换，内容不变的问题
+                                    }
+                                }, false);
+                            }
+                        }
+                    }
+                });
+            })
+        </script>
+
+        <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
+    </div>
+</div>
+<div class="title_prohot">
+  <h3>公告</h3>
+  <p>—— 宿舍管理系统公告栏 ——</p>
 </div>
 <div class="prolist">
   <div class="left_nav">

@@ -9,7 +9,7 @@ a{ text-decoration:none}
 
 
 .main{ width:100%; background:url(../imgs/login/bk-login.png) no-repeat; background-size:100% 100%; overflow:hidden}
-.main0{ width:1200px; height:540px; background:#fff; margin:0 auto; margin-top:140px;}
+.main0{ width:1200px; height:640px; background:#fff; margin:0 auto; margin-top:140px;}
 .main_left{ float:left; width:647px; position:relative}
 .main_left img{ position:absolute}
 .theimg{ top:90px; left:270px}
