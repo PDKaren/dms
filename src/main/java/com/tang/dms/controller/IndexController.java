@@ -2,6 +2,7 @@ package com.tang.dms.controller;
 
 import com.tang.dms.entity.Notice;
 import com.tang.dms.entity.bo.NoticeBO;
+import com.tang.dms.entity.bo.NoticeDetailBO;
 import com.tang.dms.service.NoticeService;
 import com.tang.dms.util.ImageCode;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,24 +34,6 @@ import java.util.Map;
 @Controller
 public class IndexController {
 
-/*    @PostMapping("/user/login")
-    public String login(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
-            Model model, HttpSession session){
-        if (!StringUtils.isEmpty(username) && "123456".equals(password)){
-            session.setAttribute("loginUser",username);
-            return "redirect:/main.html";
-        }else{
-            model.addAttribute("msg","用户名或密码错误");
-            return "login";
-        }
-    }
-    @PostMapping("/user/logout")
-    public String logout(HttpSession session){
-        session.invalidate();
-        return "redirect:/main.html";
-    }*/
 
     @Resource
     private NoticeService noticeService;
@@ -62,7 +46,6 @@ public class IndexController {
     @RequestMapping({"/","/index"})
     public String index(Model model){
         List<NoticeBO> list = noticeService.getNoticeList();
-        System.out.println(list);
         model.addAttribute("noticeList",list);
         return "view/index/index";
     }
@@ -71,11 +54,13 @@ public class IndexController {
         return "view/login";
     }
 
-    @GetMapping("/getNoticeById")
-    public Map<String,Object> getNotices(){
-
-
-        return null;
+    @GetMapping("/getNoticeById/{id}")
+    @ResponseBody
+    public Map<String,Object> getNotices(@PathVariable Integer id){
+        NoticeDetailBO noticeDetailBO = noticeService.getNoticeDetail(id);
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("noticeDetail",noticeDetailBO);
+        return map;
     }
 
     @RequestMapping("/getInfo")

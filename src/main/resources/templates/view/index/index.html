@@ -112,17 +112,17 @@
 <div class="prolist">
     <div class="left_nav" style="position: relative;">
         <dl class="dlx1">
-            <dt>公司产品</dt>
-            <dd>OUR PRODUCTS</dd>
+            <dt>系统公告</dt>
+            <dd>System Announcement</dd>
         </dl>
         <ul id="listView" style="overflow:overlay;">
-            <div th:each="notice, noticeStat : ${noticeList}">
-            <li style="margin-bottom: 15px;"> <a href="#"><i class="fa fa-fw fa-chevron-circle-right"></i>[[${notice.title}]]</a></li>
+            <div th:onclick="|noticeDetail('${notice.id}')|" th:each="notice, noticeStat : ${noticeList}">
+                <li id="noticeDetail"  style="margin-bottom: 15px;"> <a><i class="fa fa-fw fa-chevron-circle-right"></i>[[${notice.title}]]</a></li>
             </div>
         </ul>
         <dl class="dlx2" style="position:absolute;bottom:0;padding: 15px 0;padding-left: 20px;width:100%;">
-            <dt>客服电话</dt>
-            <dd>021-123456</dd>
+            <dt>管理员电话</dt>
+            <dd>020-123456</dd>
         </dl>
     </div>
     <div class="right_box">
@@ -131,23 +131,38 @@
             #notice li{list-style: none;}
         </style>
         <div style="text-align: center" id="notice">
+            <h1 id="notice-title">公告栏</h1>
+            <p id="notice-content">根据《中华人民共和国宪法》和相关法律法规规定，在保护公民合法言论自由的同时，禁止利用互联网、通讯工具、媒体以及其他方式从事以下行为：</p>
 
-            <h1>重要通知（HTML5+CSS3，IE悲剧）</h1>
-            <p>根据《中华人民共和国宪法》和相关法律法规规定，在保护公民合法言论自由的同时，禁止利用互联网、通讯工具、媒体以及其他方式从事以下行为：</p>
-            <ul>
-                <li>一、组织、煽动抗拒、破坏宪法和法律、法规实施的。</li>
-                <li>二、捏造或者歪曲事实，散布谣言，妨害社会管理秩序的。</li>
-                <li>三、组织、煽动非法集会、游行、示威、扰乱公共场所秩序的。</li>
-                <li>四、从事其他侵犯国家、社会、集体利益和公民合法权益的。</li>
-            </ul>
-            <p>管理部门将依法严加监管上述行为并予以处理；对构成犯罪的，司法机关将追究刑事责任。</p>
-
-            <p>发布者：</p>
+            <p style="text-align: right">发布时间：<p style="text-align: right" id="notice-creat-date"></p></p>
+            <p style="text-align: right">发布者：<p style="text-align: right" id="notice-admin-name"></p></p>
         </div>
-        <script>
+        <script type="text/javascript">
+            function noticeDetail(id) {
+                console.log(id);
+                $.ajax({
+                    url: "/getNoticeById/"+id,
+                    type: "get",
+                    dataType:'json',
+                    // data:'',
+                    // headers:'',
+                    success:function(msg){
+                        console.log(msg);
+                        $("#notice-title").text(msg.noticeDetail.title);
+                        $("#notice-content").text(msg.noticeDetail.content);
+                        $("#notice-creat-date").text(msg.noticeDetail.creatDate);
+                        $("#notice-admin-name").text(msg.noticeDetail.adminName);
+                    },
+                    error: function(msg){
+
+                    }
+                });
+            }
+        </script>
+        <!--<script>
             $(document).ready(function () {
                 $.ajax({
-                    url:"./json/tab_General.json",  //tab数据存储在json中
+                    url:"/getNoticeById/",  //tab数据存储在json中
                     type:"get",
                     dataType:'json',
                     success: function(data){
@@ -182,85 +197,12 @@
                     }
                 });
             })
-        </script>
+        </script>-->
 
-        <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
+        <!--<div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>-->
     </div>
 </div>
-<div class="title_prohot">
-  <h3>公告</h3>
-  <p>—— 宿舍管理系统公告栏 ——</p>
-</div>
-<div class="prolist">
-  <div class="left_nav">
-    <dl class="dlx1">
-      <dt>公司产品</dt>
-      <dd>OUR PRODUCTS</dd>
-    </dl>
-    <ul>
-      <li> <a href="/c-wdyb.html"><i class="fa fa-fw fa-chevron-circle-right"></i>温度仪表</a> </li>
-      <li> <a href="/c-ylyb.html"><i class="fa fa-fw fa-chevron-circle-right"></i>压力仪表</a> </li>
-      <li> <a href="/c-llyb.html"><i class="fa fa-fw fa-chevron-circle-right"></i>流量仪表</a> </li>
-      <li> <a href="/c-wwyb.html"><i class="fa fa-fw fa-chevron-circle-right"></i>物位仪表</a> </li>
-      <li> <a href="/c-ywyb.html"><i class="fa fa-fw fa-chevron-circle-right"></i>液位仪表</a> </li>
-      <li> <a href="/c-tjjl.html"><i class="fa fa-fw fa-chevron-circle-right"></i>调节记录</a> </li>
-      <li> <a href="/c-zsyb.html"><i class="fa fa-fw fa-chevron-circle-right"></i>转速仪表</a> </li>
-      <li> <a href="/c-qdmf.html"><i class="fa fa-fw fa-chevron-circle-right"></i>气动阀门</a> </li>
-      <li> <a href="/c-ddmf.html"><i class="fa fa-fw fa-chevron-circle-right"></i>电动阀门</a> </li>
-    </ul>
-    <dl class="dlx2">
-      <dt>客服电话</dt>
-      <dd>021-123456</dd>
-    </dl>
-  </div>
-  <div class="right_box">
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-    <div class="proli"> <a href=""> <img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /> </a> <span>双针压力表</span> <small>产品型号：YZS-102</small> </div>
-  </div>
-</div>
-<div class="title_prohot">
-  <h2>热门产品</h2>
-  <p>—— 以质取胜，以服务求生存 ——</p>
-</div>
-<div class="icolist"> <a href="/">上海自动化仪表一厂</a> <a href="/">自动化仪表三厂</a> <a href="/">自动化仪表四厂</a> <a href="/">自动化仪表五厂</a> <a href="/">大华仪表厂(自仪六厂)</a> <a href="/">自动化仪表七厂</a> <a href="/">自动化仪表九厂</a> <a href="/">自动化仪表十一厂</a> <a href="/">上海转速表厂</a> </div>
-<div class="hotlist">
-  <div class="swiper-container swiper-container-hotlist">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-      <div class="swiper-slide"> <a href=""><img src="imgs/12b49c85a0dbd82ea9b1761ec504303f.jpg" /></a> <span>产品名称</span> </div>
-    </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
-  </div>
-</div>
+
 <div class="title_prohot">
   <h3>关于我们</h3>
   <p>—— 专注产品，追求创新 ——</p>

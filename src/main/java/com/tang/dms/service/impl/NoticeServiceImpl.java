@@ -3,6 +3,7 @@ package com.tang.dms.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tang.dms.entity.Notice;
 import com.tang.dms.entity.bo.NoticeBO;
+import com.tang.dms.entity.bo.NoticeDetailBO;
 import com.tang.dms.mapper.NoticeMapper;
 import com.tang.dms.service.NoticeService;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,10 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper,Notice> implemen
     @Override
     public List<NoticeBO> getNoticeList() {
         return noticeMapper.selectNoticeTitle();
+    }
+
+    @Override
+    public NoticeDetailBO getNoticeDetail(Integer id) {
+        return noticeMapper.selectNoticeById(id);
     }
 }

@@ -5,6 +5,17 @@
 <mapper namespace="com.tang.dms.mapper.NoticeMapper">
 
     <select id="selectNoticeTitle" resultType="com.tang.dms.entity.bo.NoticeBO">
-        SELECT id,title,creat_time FROM notice ORDER BY creat_time DESC;
+        SELECT id,title,creat_time FROM notice WHERE `status` = 1 ORDER BY creat_time DESC;
+    </select>
+    <select id="selectNoticeById" resultType="com.tang.dms.entity.bo.NoticeDetailBO">
+        SELECT n.id,
+        n.title,
+        n.content,
+        u.`name` AS adminName,
+        n.creat_time AS creatDate
+        FROM notice n
+        LEFT JOIN user_admin ua ON n.admin_id = ua.aid
+        LEFT JOIN `user` u ON ua.uid = u.id
+        WHERE n.id = #{id}
     </select>
 </mapper>
